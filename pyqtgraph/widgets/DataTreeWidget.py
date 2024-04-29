@@ -28,6 +28,7 @@ class DataTreeWidget(QtWidgets.QTreeWidget):
         self.setHeaderLabels(['key / index', 'type', 'value'])
         self.setAlternatingRowColors(True)
         self.disableTableWidgetforNdarray=disableTableWidgetforNdarray
+    
     def setData(self, data, hideRoot=False):
         """data should be a dictionary."""
         self.clear()
@@ -36,8 +37,10 @@ class DataTreeWidget(QtWidgets.QTreeWidget):
         self.buildTree(data, self.invisibleRootItem(), hideRoot=hideRoot)
         self.expandToDepth(3)
         self.resizeColumnToContents(0)
+   
     def setDisableTableWidgetforNdArray(self,disabled):
         self.disableTableWidgetforNdarray=disabled
+    
     def buildTree(self, data, parent, name='', hideRoot=False, path=()):
         if hideRoot:
             node = parent
