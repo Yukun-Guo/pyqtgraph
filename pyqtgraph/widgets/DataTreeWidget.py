@@ -20,14 +20,14 @@ class DataTreeWidget(QtWidgets.QTreeWidget):
     Widget for displaying hierarchical python data structures
     (eg, nested dicts, lists, and arrays)
     """
-    def __init__(self, parent=None, data=None):
+    def __init__(self, parent=None, data=None, hideRoote=False,disableTableWidgetforNdarray=False):
         QtWidgets.QTreeWidget.__init__(self, parent)
         self.setVerticalScrollMode(self.ScrollMode.ScrollPerPixel)
-        self.setData(data)
+        self.setData(data,hideRoote)
         self.setColumnCount(3)
         self.setHeaderLabels(['key / index', 'type', 'value'])
         self.setAlternatingRowColors(True)
-        
+        self.disableTableWidgetforNdarray=disableTableWidgetforNdarray
     def setData(self, data, hideRoot=False):
         """data should be a dictionary."""
         self.clear()
@@ -36,7 +36,8 @@ class DataTreeWidget(QtWidgets.QTreeWidget):
         self.buildTree(data, self.invisibleRootItem(), hideRoot=hideRoot)
         self.expandToDepth(3)
         self.resizeColumnToContents(0)
-        
+    def setDisableTableWidgetforNdArray(self,disabled):
+        self.disableTableWidgetforNdarray=disabled
     def buildTree(self, data, parent, name='', hideRoot=False, path=()):
         if hideRoot:
             node = parent
@@ -109,10 +110,12 @@ class DataTreeWidget(QtWidgets.QTreeWidget):
             ])
         elif isinstance(data, np.ndarray):
             desc = "shape=%s dtype=%s" % (data.shape, data.dtype)
-            table = TableWidget()
-            table.setData(data)
-            table.setMaximumHeight(200)
-            widget = table
+            if not self.disableTableWidgetforNdarray:
+                table = TableWidget()
+                table.setData(data)
+                table.setMaximumHeight(200)
+                widget = table
+            
         elif isinstance(data, types.TracebackType):  ## convert traceback to a list of strings
             frames = list(map(str.strip, traceback.format_list(traceback.extract_tb(data))))
             #childs = OrderedDict([
