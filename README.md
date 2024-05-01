@@ -119,3 +119,5 @@ Here is a partial listing of some of the applications that make use of PyQtGraph
 * [STDF-Viewer](https://github.com/noonchen/STDF-Viewer)
 
 Do you use PyQtGraph in your own project, and want to add it to the list?  Submit a pull request to update this listing!
+## change log
+see documentation [here](changes.md)
