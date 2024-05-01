@@ -29,7 +29,7 @@ class ReplWidget(QtWidgets.QWidget):
         outputCharFormat = QtGui.QTextCharFormat()
         outputCharFormat.setFontWeight(QtGui.QFont.Weight.Normal)
         cmdBlockFormat = QtGui.QTextBlockFormat()
-        cmdBlockFormat.setBackground(mkBrush("#335" if isDark else "#CCF"))
+        cmdBlockFormat.setBackground(mkBrush("##aee0ff" if isDark else "#CCF"))
         cmdCharFormat = QtGui.QTextCharFormat()
         cmdCharFormat.setFontWeight(QtGui.QFont.Weight.Bold)
         self.textStyles = {
